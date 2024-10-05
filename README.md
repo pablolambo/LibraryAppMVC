@@ -14,7 +14,7 @@ A simple web application built using the ASP.NET MVC framework as part of academ
 ## Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/LibraryAppMVC.git
+   git clone https://github.com/pablolambo/LibraryAppMVC.git
    ```
 2. Open the project in Visual Studio.
 3. Restore NuGet packages.
