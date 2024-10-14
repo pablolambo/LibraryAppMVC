@@ -9,7 +9,7 @@ namespace Biblioteczka.Models
 {
     public class Ksiazka
     {
-        [HiddenInput(DisplayValue = false)]
+        [HiddenInput(DisplayValue = true)]
         public int ID { get; set; }
 
         [Display(Name = "Tytuł")]

@@ -14,7 +14,8 @@ namespace Biblioteczka.Controllers
         // GET: Biblioteczka/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            Ksiazka ks = KontekstKsiazek.Instancja.Pobierz(id);
+            return View(ks);
         }
 
         // GET: Biblioteczka/Create
@@ -23,46 +24,55 @@ namespace Biblioteczka.Controllers
             return View();
         }
 
-        // POST: Biblioteczka/Create
+        // Paweł Frankowski
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Ksiazka ksiazka)
         {
-            try
+            // Rozbudowana walidacja
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                KontekstKsiazek.Instancja.Dodaj(ksiazka.Tytul, ksiazka.Autor, ksiazka.IloscStron);
+                return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+
+            return View(ksiazka);
         }
 
         // GET: Biblioteczka/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var ksiazka = KontekstKsiazek.Instancja.Pobierz(id);
+            if (ksiazka == null)
+            {
+                return NotFound();
+            }
+            return View(ksiazka);
         }
 
         // POST: Biblioteczka/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, Ksiazka ksiazka, IFormCollection collection)
         {
-            try
+            // Rozbudowana walidacja
+            if (ModelState.IsValid)
             {
+                KontekstKsiazek.Instancja.Edytuj(id, ksiazka.Tytul, ksiazka.Autor, ksiazka.IloscStron);
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+
+            return View(ksiazka);
         }
 
         // GET: Biblioteczka/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var ksiazka = KontekstKsiazek.Instancja.Pobierz(id);
+            if (ksiazka == null)
+            {
+                return NotFound();
+            }
+            return View(ksiazka);
         }
 
         // POST: Biblioteczka/Delete/5
@@ -72,6 +82,7 @@ namespace Biblioteczka.Controllers
         {
             try
             {
+                KontekstKsiazek.Instancja.Usun(id);
                 return RedirectToAction(nameof(Index));
             }
             catch
