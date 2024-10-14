@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Biblioteczka.Models;
+using Humanizer;
+using Newtonsoft.Json.Linq;
 
 namespace Biblioteczka.Controllers
 {
@@ -24,11 +26,12 @@ namespace Biblioteczka.Controllers
             return View();
         }
 
-        // Paweł Frankowski
         [HttpPost]
         public ActionResult Create(Ksiazka ksiazka)
         {
             // Rozbudowana walidacja
+            // ModelState.IsValid indicates if it was possible to bind the incoming values from the request to the model correctly
+            // and whether any explicitly specified validation rules were broken during the model binding process.
             if (ModelState.IsValid)
             {
                 KontekstKsiazek.Instancja.Dodaj(ksiazka.Tytul, ksiazka.Autor, ksiazka.IloscStron);
